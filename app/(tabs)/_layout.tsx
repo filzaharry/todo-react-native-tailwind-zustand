@@ -1,4 +1,4 @@
-import { Tabs } from "expo-router"
+import { Stack, Tabs } from "expo-router"
 
 export default () => {
     return (
@@ -6,15 +6,8 @@ export default () => {
             <Tabs.Screen
                 name="home"
                 options={{
-                    tabBarLabel: 'List',
-                    headerTitle: 'Home Screen',
-                }}
-            />
-            <Tabs.Screen
-                name="profile"
-                options={{
-                    tabBarLabel: 'Account',
-                    headerTitle: 'My Account',
+                    tabBarLabel: 'Home',
+                    headerShown: false
                 }}
             />
             <Tabs.Screen

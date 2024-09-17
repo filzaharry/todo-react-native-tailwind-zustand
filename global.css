@@ -1,3 +1,43 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+@font-face {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(/assets/font/poppins/Poppins-Regular.ttf) format("ttf");
+}
+
+.font-poppins {
+    font-family: "Poppins", sans-serif;
+}
+
+@layer base {
+  /* h1 {
+    @apply text-2xl;
+  } */
+  /* ... */
+ 
+
+}
+
+@layer utilities {
+  /* .content-auto {
+    content-visibility: auto;
+  } */
+}
+
+@layer components {
+  /* .select2-dropdown {
+    @apply rounded-b-lg shadow-md;
+  } */
+  /* ... */
+
+  
+  .base-layout{
+    @apply text-center h-screen mx-auto justify-center bg-gray-dark w-full px-10 flex flex-col gap-10
+  }
+}
