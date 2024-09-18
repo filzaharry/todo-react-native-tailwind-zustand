@@ -30,9 +30,6 @@ const zustandBase = create<State & Action>((set) => ({
     // get async storage taskData 
     const getTask :any = await AsyncStorage.getItem('taskData')
 
-    console.log(JSON.parse(getTask));
-    
-
     set(
         produce<State>((state) => {
             state.countPending = 10

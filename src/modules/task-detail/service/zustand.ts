@@ -78,6 +78,6 @@ const zustandBase = create<State & Action>((set) => ({
   },
 }));
 
-const useTaskCreate = createSelectorHooks(zustandBase);
+const useTaskDetail = createSelectorHooks(zustandBase);
 
-export default useTaskCreate;
+export default useTaskDetail;

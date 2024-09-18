@@ -6,6 +6,7 @@ import HomeTaskItem from "./widget/home-task-item";
 import HomeTaskList from "./widget/home-task-list";
 import useHome from "./service/zustand";
 import * as Notifications from 'expo-notifications';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const HomeLayout = () => {
   const { countDone, countPending, taskList, loadTask } = useHome()

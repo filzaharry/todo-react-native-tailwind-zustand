@@ -29,9 +29,9 @@ export default () => {
         }}
       />
       <Tabs.Screen
-        name="list"
+        name="history"
         options={{
-          tabBarLabel: "Lists",
+          tabBarLabel: "History Task",
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Entypo name="list" color={color} size={size} />

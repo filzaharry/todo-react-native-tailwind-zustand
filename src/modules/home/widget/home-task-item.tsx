@@ -10,8 +10,8 @@ const HomeTaskItem = (props:HomeTaskItemProps) => {
     // <Link href={`/list/${props.id}`} className=" bg-gray w-full rounded-2xl p-4 flex flex-row justify-between">
       <Pressable onPress={()=>router.push(`/list/${props.id}`)} className=" bg-gray w-full rounded-2xl p-4 flex flex-row justify-between">
         <View>
-          <Text className="text-md text-white font-poppins">{props.id}</Text>
-          {/* <Text className="text-md text-white font-poppins">{props.title}</Text> */}
+          {/* <Text className="text-md text-white font-poppins">{props.id}</Text> */}
+          <Text className="text-md text-white font-poppins">{props.title}</Text>
           <Text className="text-xs text-white font-poppins">{props.start} - {props.end}</Text>
         </View>
         {props.status == 0 && (<BadgeDefault keyword='PENDING' />)}

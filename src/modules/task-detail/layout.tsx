@@ -10,15 +10,15 @@ import {
 } from "react-native";
 import React, { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import HomeCategories from "./widget/home-categories";
-import HomeTaskItem from "./widget/home-task-item";
-import HomeTaskList from "./widget/home-task-list";
+import * as Notifications from "expo-notifications";
 import { useGlobalSearchParams, useRouter } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import useTaskCreate from "./service/zustand";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { TaskSubmitType } from "./type/type";
+import useTaskDetail from "./service/zustand";
+import useHome from "../home/service/zustand";
 
 const TaskDetailLayout = () => {
   let router = useRouter();
@@ -38,7 +38,9 @@ const TaskDetailLayout = () => {
     updateStart,
     updateEnd,
     submitUpdateTask,
-  } = useTaskCreate();
+  } = useTaskDetail();
+
+  const {loadTask} =useHome()
 
   useEffect(() => {
     handleLoadData();
@@ -46,8 +48,8 @@ const TaskDetailLayout = () => {
 
   const handleLoadData = async () => {
     const data: any = await AsyncStorage.getItem("taskData");
-    const parseData = JSON.parse(data)
-    
+    const parseData = JSON.parse(data);
+
     parseData.map((item: any) => {
       if (item.id == id) {
         updateTitle(item.title);
@@ -60,36 +62,75 @@ const TaskDetailLayout = () => {
 
   useEffect(() => {}, [title, start, end, status]);
 
-  const onUpdate = (data: any) => {
+  const onUpdate = async (data: any) => {
     const request = {
       id: id.toString(),
-      title: data.title,
-      start: data.start,
-      end: data.end,
+      title: title,
+      start: start,
+      end: end,
       status,
     };
-    console.log("request");
-    console.log(request);
     
-    // submitUpdateTask(request);
-    Alert.alert("Success", "success added");
+    const getFromStorage: any = await AsyncStorage.getItem("taskData");
+    const taskData = JSON.parse(getFromStorage);
+    // check same id value and get the index to remove
+    const index = taskData.map((e: { id: any }) => e.id).indexOf(id);
+    // remove selected index
+    taskData.splice(index, 1);
+    // push new data in array
+    taskData.push(request)
+    // updated data
+    AsyncStorage.setItem("taskData", JSON.stringify(taskData));
+    
+    Alert.alert("Success", "success updated data");
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+      }),
+    });
+
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Success",
+        body: "Success Updated Task",
+      },
+      trigger: null,
+    });
+    loadTask(0,'');
     router.back();
   };
 
   const onDelete = async () => {
-    const data :any = await AsyncStorage.getItem('taskData')
+    const data: any = await AsyncStorage.getItem("taskData");
     const taskData = JSON.parse(data);
     // check same id value and get the index to remove
-    const index = taskData.map((e: { id: any; }) => e.id).indexOf(id);
+    const index = taskData.map((e: { id: any }) => e.id).indexOf(id);
     // remove selected index
     taskData.splice(index, 1);
-    console.log("taskData");
-    console.log(taskData);
-    localStorage.setItem('taskData', JSON.stringify([]));
-    // localStorage.setItem('taskData', JSON.stringify(taskData));
-    router.replace('/home')
+    // updated data
+    AsyncStorage.setItem("taskData", JSON.stringify(taskData));
     
-  }
+    Alert.alert("Success", "success deleted data");
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+      }),
+    });
+    
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Success",
+        body: "Success Delete Task",
+      },
+      trigger: null,
+    });
+    loadTask(0,'');
+    router.back();
+  };
 
   return (
     <View className="text-center h-screen  bg-gray-dark w-full px-10 flex flex-col gap-10">
@@ -99,9 +140,7 @@ const TaskDetailLayout = () => {
             <Pressable onPress={() => router.back()}>
               <AntDesign name="arrowleft" size={20} color="white" />
             </Pressable>
-            <Text className="text-2xl text-white font-poppins">
-              Tasks {id}
-            </Text>
+            <Text className="text-2xl text-white font-poppins">Tasks {id}</Text>
           </View>
           <View className="flex flex-col gap-2">
             <Text className="text-white text-md">Title :</Text>
@@ -218,7 +257,7 @@ const TaskDetailLayout = () => {
               </Pressable>
             </View>
             <View className="text-center w-40 bg-grey p-2 rounded-full mx-auto mt-20">
-              <Pressable onPress={()=>onDelete()}>
+              <Pressable onPress={() => onDelete()}>
                 <Text className="text-sm text-center text-white font-semibold font-poppins">
                   Delete Task
                 </Text>
