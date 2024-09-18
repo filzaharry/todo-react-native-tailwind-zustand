@@ -23,8 +23,6 @@ const HomeTaskList = () => {
                   )
                 })
               }
-              {/* <HomeTaskItem title={"Backend Coding Time"} start={"13:00"} end={"16:00"} status={1} />
-              <HomeTaskItem title={"Design Review"} start={"17:00"} end={"18:00"} status={0} /> */}
             </View>
           </View>
   )

@@ -28,13 +28,24 @@ const zustandBase = create<State & Action>((set) => ({
   loadTask: async (status:number, keyword:string) => {
     
     // get async storage taskData 
-    const getTask :any = await AsyncStorage.getItem('taskData')
+    const getFromStorage: any = await AsyncStorage.getItem("taskData");
+    const taskData = JSON.parse(getFromStorage);
+
+    
+    const countPending = taskData.filter(function(element:any){
+        return element.status == 0;
+    }).length
+
+    const countDone = taskData.filter(function(element:any){
+        return element.status == 2;
+    }).length
+  
 
     set(
         produce<State>((state) => {
-            state.countPending = 10
-            state.countDone = 10
-            state.taskList = JSON.parse(getTask)
+            state.countPending = countPending
+            state.countDone = countDone
+            state.taskList = taskData
         })
     );
   },

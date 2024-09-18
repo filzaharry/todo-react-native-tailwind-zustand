@@ -31,7 +31,7 @@ const HomeCategories = () => {
         <Pressable
           className="h-44 bg-gray rounded-2xl p-4"
           style={{ flex: 1 }}
-          onPress={() => handlePress("pending")}
+          // onPress={() => handlePress("pending")}
         >
           <Text className="text-xl text-white font-poppins">Pending</Text>
           <Text className="text-xs text-white font-poppins">{countPending} Tasks</Text>
@@ -48,7 +48,7 @@ const HomeCategories = () => {
         <Pressable
           className="h-44 bg-gray rounded-2xl p-4"
           style={{ flex: 1 }}
-          onPress={() => handlePress("done")}
+          // onPress={() => handlePress("done")}
         >
           <Text className="text-xl text-white font-poppins">Done</Text>
           <Text className="text-xs text-white font-poppins">{countDone} Tasks</Text>
