@@ -1,11 +1,19 @@
 import { View, Text, TextInput, Image, ScrollView } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HomeCategories from "./widget/home-categories";
 import HomeTaskItem from "./widget/home-task-item";
 import HomeTaskList from "./widget/home-task-list";
+import useHome from "./service/zustand";
+import * as Notifications from 'expo-notifications';
 
 const HomeLayout = () => {
+  const { countDone, countPending, taskList, loadTask } = useHome()
+
+  useEffect(() => {
+    loadTask(0,'')
+  }, [])
+  
   return (
     <View className="text-center h-screen  bg-gray-dark w-full px-10 flex flex-col gap-10">
       <SafeAreaView>
@@ -13,7 +21,7 @@ const HomeLayout = () => {
           <View className="py-4">
             <Text className="text-2xl text-white font-poppins">Hi, Filza</Text>
             <Text className="text-xs text-white font-poppins">
-              10 Tasks Pending
+              {countPending} Tasks Pending
             </Text>
           </View>
           <View className="w-full bg-gray px-10 py-2 rounded-full">

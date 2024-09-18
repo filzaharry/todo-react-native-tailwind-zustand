@@ -5,7 +5,8 @@ import { Stack } from 'expo-router'
 const NewsLayout = () => {
   return (
    <Stack>
-    <Stack.Screen name='index' options={{headerTitle:'News'}} />
+    <Stack.Screen name='index' options={{headerShown:false}} />
+    <Stack.Screen name='[id]' options={{headerShown:false}} />
    </Stack>
   )
 }

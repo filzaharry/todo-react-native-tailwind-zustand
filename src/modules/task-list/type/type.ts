@@ -1,5 +1,4 @@
-export type HomeTaskItemProps = {
-    id: string
+export type TaskItemProps = {
     title: string
     start: string
     end: string

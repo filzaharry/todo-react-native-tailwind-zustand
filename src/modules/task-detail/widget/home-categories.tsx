@@ -1,40 +1,17 @@
-import { View, Text, Image, Pressable } from "react-native";
+import { View, Text, Image } from "react-native";
 import React from "react";
-import { useRouter } from "expo-router";
-import useHome from "../service/zustand";
 const imgPending = require("./../../../assets/images/img_2.png");
 const imgDone = require("./../../../assets/images/img_3.png");
 const imgAddNew = require("./../../../assets/images/img_4.png");
 
 const HomeCategories = () => {
-  const { countDone, countPending } = useHome()
-  const router = useRouter()
-  const handlePress = (value: string) => {
-    switch (value) {
-      case 'pending':
-        router.push('/task_list');
-        break;
-      case 'done':
-        router.push('/task_list');
-        break;
-      case 'new':
-        router.push('/task_create');
-        break;
-      default:
-        break;
-    }
-  };
   return (
     <View className="py-4">
       <Text className="text-white font-poppins">Categories</Text>
       <View className="flex flex-row w-full gap-2" style={{ marginBottom: 10 }}>
-        <Pressable
-          className="h-44 bg-gray rounded-2xl p-4"
-          style={{ flex: 1 }}
-          onPress={() => handlePress("pending")}
-        >
+        <View className="h-44 bg-gray rounded-2xl p-4" style={{ flex: 1 }}>
           <Text className="text-xl text-white font-poppins">Pending</Text>
-          <Text className="text-xs text-white font-poppins">{countPending} Tasks</Text>
+          <Text className="text-xs text-white font-poppins">10 Tasks</Text>
           <View className="flex flex-row justify-between pt-8">
             <View></View>
             <Image
@@ -44,14 +21,10 @@ const HomeCategories = () => {
               height={50}
             />
           </View>
-        </Pressable>
-        <Pressable
-          className="h-44 bg-gray rounded-2xl p-4"
-          style={{ flex: 1 }}
-          onPress={() => handlePress("done")}
-        >
+        </View>
+        <View className="h-44 bg-gray rounded-2xl p-4" style={{ flex: 1 }}>
           <Text className="text-xl text-white font-poppins">Done</Text>
-          <Text className="text-xs text-white font-poppins">{countDone} Tasks</Text>
+          <Text className="text-xs text-white font-poppins">1 Tasks</Text>
           <View className=" flex flex-row justify-between pt-8">
             <View></View>
             <Image
@@ -61,14 +34,10 @@ const HomeCategories = () => {
               height={50}
             />
           </View>
-        </Pressable>
+        </View>
       </View>
 
-      <Pressable
-        className="h-36 bg-gray w-full rounded-2xl p-4"
-        style={{ flex: 1 }}
-        onPress={() => handlePress("new")}
-      >
+      <View className="h-36 bg-gray w-full rounded-2xl p-4">
         <Text className="text-xl text-white font-poppins">Create New Task</Text>
         <Text className="text-xs text-white font-poppins">
           Add more task for your activities
@@ -82,7 +51,7 @@ const HomeCategories = () => {
             height={50}
           />
         </View>
-      </Pressable>
+      </View>
     </View>
   );
 };
